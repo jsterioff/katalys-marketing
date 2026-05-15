@@ -1,0 +1,263 @@
+/* Quorum Civic marketing site
+ * Palette mirrors apps/civic/src/theme/tokens.ts so the marketing surface
+ * and the in-app surface share a single visual identity. Honors the user's
+ * OS color scheme (same as the app's `auto` default).
+ */
+
+:root {
+  /* Light theme (Civic light palette) */
+  --bg: #FFFFFF;
+  --bg-elevated: #F5F5F7;
+  --bg-card: #FFFFFF;
+  --border: #D2D2D7;
+
+  --text-primary: #1A1A1F;
+  --text-secondary: #4A4A52;
+  --text-muted: #8E8E93;
+
+  --ember: #E55600;
+  --ember-hover: #C44A00;
+  --electric-blue: #0044CC;
+
+  /* Cool mist accent — used in Civic as a soft surface */
+  --cool-mist: #F0F0F6;
+
+  --max-width: 760px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark theme (Civic dark palette) */
+    --bg: #0B0B0F;
+    --bg-elevated: #15151B;
+    --bg-card: #1B1B22;
+    --border: #2A2A33;
+
+    --text-primary: #F5F5F7;
+    --text-secondary: #A0A0AB;
+    --text-muted: #6E6E78;
+
+    --ember: #FF6200;
+    --ember-hover: #FF8533;
+    --electric-blue: #0052FF;
+
+    --cool-mist: #1B1B22;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--ember); text-decoration: none; }
+a:hover { color: var(--ember-hover); text-decoration: underline; }
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.brand .spark { color: var(--ember); }
+nav a {
+  margin-left: 24px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+nav a:hover { color: var(--ember); text-decoration: none; }
+
+/* Hero */
+.hero {
+  padding: 80px 0 64px;
+  text-align: left;
+}
+.hero h1 {
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 24px;
+  font-weight: 700;
+}
+.hero .tagline {
+  font-size: 20px;
+  color: var(--text-secondary);
+  margin: 0 0 32px;
+  max-width: 560px;
+}
+.hero .cta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  background: var(--ember);
+  color: #FFFFFF;
+  border: 1px solid var(--ember);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover {
+  background: var(--ember-hover);
+  border-color: var(--ember-hover);
+  color: #FFFFFF;
+  text-decoration: none;
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover {
+  background: var(--bg-elevated);
+  color: var(--electric-blue);
+  border-color: var(--electric-blue);
+}
+
+/* Sections */
+section {
+  padding: 56px 0;
+  border-top: 1px solid var(--border);
+}
+section h2 {
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 0 0 32px;
+  font-weight: 700;
+}
+section h3 {
+  font-size: 19px;
+  color: var(--text-primary);
+  margin: 32px 0 12px;
+  font-weight: 600;
+}
+
+/* Feature grid */
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 40px;
+}
+@media (max-width: 600px) {
+  .features { grid-template-columns: 1fr; }
+}
+.feature h4 {
+  font-size: 17px;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.feature p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Content pages */
+.page-title {
+  font-size: 36px;
+  color: var(--text-primary);
+  margin: 56px 0 8px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.page-meta {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0 0 40px;
+}
+.content p { margin: 0 0 16px; color: var(--text-secondary); }
+.content ul { margin: 0 0 16px; padding-left: 24px; }
+.content li { margin-bottom: 8px; color: var(--text-secondary); }
+.content strong { color: var(--text-primary); }
+
+/* Callout — uses ember left border to match in-app warning/highlight cards */
+.callout {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ember);
+  padding: 16px 20px;
+  border-radius: 4px;
+  margin: 24px 0;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+.callout strong { color: var(--text-primary); }
+
+/* FAQ */
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+.faq-a { margin: 0; color: var(--text-secondary); }
+
+/* Footer */
+footer {
+  margin-top: 80px;
+  padding: 32px 0 48px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg);
+}
+footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+footer a { color: var(--text-muted); margin-left: 16px; }
+footer a:first-of-type { margin-left: 0; }
+footer a:hover { color: var(--ember); }
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 32px; }
+  .hero .tagline { font-size: 17px; }
+  .page-title { font-size: 28px; }
+  .brand { font-size: 15px; white-space: nowrap; }
+  nav a { margin-left: 12px; font-size: 13px; }
+  header .container { gap: 12px; }
+}
