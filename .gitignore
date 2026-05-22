@@ -1,0 +1,9 @@
+# Local agent / editor config
+.claude/
+
+# macOS
+.DS_Store
+
+# Secrets — never commit
+.env
+.env.*
