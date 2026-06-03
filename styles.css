@@ -150,6 +150,58 @@ nav a:hover { color: var(--ember); text-decoration: none; }
   border-color: var(--electric-blue);
 }
 
+/* App screenshots — horizontal scroll-snap strip of CSS phone frames.
+ * No JS, swipeable on mobile. Bezel stays dark in both themes (phones read
+ * right that way), so it only references the always-dark token values. */
+.shots-section { padding-top: 48px; }
+.shots {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 4px 16px;
+  margin: 0 -24px;          /* bleed to container edges so phones can scroll past */
+  padding-left: 24px;
+  padding-right: 24px;
+  scrollbar-width: none;
+}
+.shots::-webkit-scrollbar { display: none; }
+.phone {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  width: 232px;
+  margin: 0;
+}
+.phone .frame {
+  background: #0B0B0F;
+  border: 1px solid #2A2A33;
+  border-radius: 38px;
+  padding: 10px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+}
+.phone img {
+  display: block;
+  width: 100%;
+  border-radius: 28px;
+}
+.phone figcaption {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 8px;
+}
+.shots-hint {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+@media (max-width: 600px) {
+  .phone { width: 78vw; max-width: 300px; }
+}
+
 /* Sections */
 section {
   padding: 56px 0;
