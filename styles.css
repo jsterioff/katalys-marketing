@@ -1,4 +1,4 @@
-/* Quorum Civic marketing site
+/* QuorumCivic marketing site
  * Palette mirrors apps/civic/src/theme/tokens.ts so the marketing surface
  * and the in-app surface share a single visual identity. Honors the user's
  * OS color scheme (same as the app's `auto` default).
@@ -19,7 +19,7 @@
   --ember-hover: #C44A00;
   --electric-blue: #0044CC;
 
-  /* Cool mist accent — used in Civic as a soft surface */
+  /* Cool mist accent, used in Civic as a soft surface */
   --cool-mist: #F0F0F6;
 
   --max-width: 760px;
@@ -162,7 +162,7 @@ nav a:hover { color: var(--ember); text-decoration: none; }
   border-color: var(--electric-blue);
 }
 
-/* App screenshots — horizontal scroll-snap strip of CSS phone frames.
+/* App screenshots: horizontal scroll-snap strip of CSS phone frames.
  * No JS, swipeable on mobile. Bezel stays dark in both themes (phones read
  * right that way), so it only references the always-dark token values. */
 .shots-section { padding-top: 48px; }
@@ -212,7 +212,7 @@ nav a:hover { color: var(--ember); text-decoration: none; }
 }
 @media (max-width: 600px) {
   /* Smaller phones so one + its caption fit the screen and the next phone
-   * peeks in from the right — that peek is what signals horizontal swipe. */
+   * peeks in from the right, and that peek is what signals horizontal swipe. */
   .shots { gap: 16px; scroll-padding-left: 24px; }
   .phone {
     width: 62vw;
@@ -298,7 +298,7 @@ section blockquote cite {
 .content li { margin-bottom: 8px; color: var(--text-secondary); }
 .content strong { color: var(--text-primary); }
 
-/* Callout — uses ember left border to match in-app warning/highlight cards */
+/* Callout: uses ember left border to match in-app warning/highlight cards */
 .callout {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
