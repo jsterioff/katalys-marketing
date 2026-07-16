@@ -99,9 +99,9 @@
     <h1>Understand what Congress is doing, and what it means.</h1>
     <p class="tagline">QuorumCivic is a nonpartisan lookup app for the public record, focused on the current Congress, the 119th (2025&ndash;2027). Search legislation, read plain-English bill analysis, follow roll-call votes, and ask questions about Congress in your own words.</p>
     <div class="cta-row">
-      <a href="https://apps.apple.com/app/quorumcivic/id6764619093" class="btn">Download on iOS</a>
-      <span class="btn btn-disabled" aria-disabled="true">Android coming soon</span>
-      <a href="support.html" class="btn btn-outline">Get in touch</a>
+      <a href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-hero" class="btn" data-attr="cta-download-ios">Download on iOS</a>
+      <span class="btn btn-disabled" aria-disabled="true" data-attr="cta-android-waitlist">Android coming soon</span>
+      <a href="support.html" class="btn btn-outline" data-attr="cta-contact">Get in touch</a>
     </div>
   </div>
 
@@ -200,6 +200,20 @@
     </div>
   </div>
 </footer>
+
+<script>
+    // The "Android coming soon" button is a non-interactive <span>, so PostHog
+    // autocapture does not record clicks on it. Capture the intent explicitly
+    // as an Android demand signal.
+    (function () {
+        var androidBtn = document.querySelector('[data-attr="cta-android-waitlist"]');
+        if (androidBtn && window.posthog) {
+            androidBtn.addEventListener('click', function () {
+                posthog.capture('android_waitlist_clicked', { location: 'hero' });
+            });
+        }
+    })();
+</script>
 
 </body>
 </html>
