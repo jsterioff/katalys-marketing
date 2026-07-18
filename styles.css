@@ -318,6 +318,56 @@ section blockquote cite {
   color: var(--text-secondary);
 }
 .callout strong { color: var(--text-primary); }
+/* Callouts on legal pages hold a lead line + list, or several paragraphs.
+ * Collapse the outer margins so the panel stays tight. */
+.callout > :first-child { margin-top: 0; }
+.callout > :last-child { margin-bottom: 0; }
+.callout p { margin: 0 0 12px; }
+.callout ul { margin: 4px 0 0; padding-left: 22px; }
+.callout li { margin-bottom: 8px; color: var(--text-secondary); }
+.callout li:last-child { margin-bottom: 0; }
+
+/* Legal-page headings. Scoped to direct children of .content so the
+ * section-wrapped support page keeps its own (section h2/h3) scale. */
+.content > h2 {
+  font-size: 24px;
+  color: var(--text-primary);
+  margin: 40px 0 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.content > h3 {
+  font-size: 18px;
+  color: var(--text-primary);
+  margin: 28px 0 10px;
+  font-weight: 600;
+}
+
+/* Data table (privacy service providers): hairline rows to match the
+ * card/callout surfaces, with an elevated header row. */
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  margin: 0 0 20px;
+  font-size: 15px;
+}
+.content th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+.content td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+.content tr:last-child td { border-bottom: none; }
+.content td:first-child { color: var(--text-primary); font-weight: 600; }
 
 /* FAQ */
 .faq-item {
