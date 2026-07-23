@@ -1,0 +1,20 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["597YRM44L8.com.tkg.quorumcivic"],
+        "components": [
+          {
+            "/": "/bill/*",
+            "comment": "Open bill drawer in Quorum Civic"
+          },
+          {
+            "/": "/civic/bill/*",
+            "comment": "Legacy bill path (pre-2026-05-19) - parser still accepts"
+          }
+        ]
+      }
+    ]
+  }
+}

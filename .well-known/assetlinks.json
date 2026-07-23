@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.tkg.quorumcivic",
+      "sha256_cert_fingerprints": [
+        "B7:82:4F:DA:4F:43:49:4D:40:45:3F:AA:6E:16:79:5D:1C:69:40:27:2B:E0:65:0E:C6:33:C6:76:F0:21:6E:55"
+      ]
+    }
+  }
+]
