@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QuorumCivic | Understand Congress: Bills, Votes &amp; the Public Record</title>
-<meta name="description" content="QuorumCivic is a free, nonpartisan iOS app that turns the congressional record into plain English. Search bills, track roll-call votes, and see who legislation helps or harms.">
+<meta name="description" content="QuorumCivic is a free, nonpartisan app for iOS and Android that turns the congressional record into plain English. Search bills, track roll-call votes, and see who legislation helps or harms.">
 <meta name="keywords" content="Congress, legislation, bills, roll-call votes, civic app, nonpartisan, congressional record, bill tracker, public record, government transparency">
 <meta name="author" content="The Katalys Group LLC">
 <meta name="robots" content="index, follow">
@@ -13,7 +13,7 @@
 
 <meta property="og:site_name" content="QuorumCivic">
 <meta property="og:title" content="QuorumCivic | Understand what Congress is doing">
-<meta property="og:description" content="A free, nonpartisan iOS app that turns the congressional record into plain English. Search bills, track roll-call votes, and see who legislation helps or harms.">
+<meta property="og:description" content="A free, nonpartisan app for iOS and Android that turns the congressional record into plain English. Search bills, track roll-call votes, and see who legislation helps or harms.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://quorumcivic.app/">
 <meta property="og:image" content="https://quorumcivic.app/images/og-cover.png">
@@ -24,7 +24,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="QuorumCivic | Understand what Congress is doing">
-<meta name="twitter:description" content="A free, nonpartisan iOS app that turns the congressional record into plain English. Search bills, track roll-call votes, and see who legislation helps or harms.">
+<meta name="twitter:description" content="A free, nonpartisan app for iOS and Android that turns the congressional record into plain English. Search bills, track roll-call votes, and see who legislation helps or harms.">
 <meta name="twitter:image" content="https://quorumcivic.app/images/og-cover.png">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
@@ -64,10 +64,13 @@
       "name": "QuorumCivic",
       "alternateName": "QuorumCivic",
       "applicationCategory": "ReferenceApplication",
-      "operatingSystem": "iOS",
-      "description": "A free, nonpartisan iOS app that turns the congressional record into plain English. Search bills, read plain-English analysis, track roll-call votes, and ask questions about Congress in your own words.",
+      "operatingSystem": "iOS, Android",
+      "description": "A free, nonpartisan app for iOS and Android that turns the congressional record into plain English. Search bills, read plain-English analysis, track roll-call votes, and ask questions about Congress in your own words.",
       "url": "https://quorumcivic.app/",
-      "downloadUrl": "https://apps.apple.com/app/quorumcivic/id6764619093",
+      "downloadUrl": [
+        "https://apps.apple.com/app/quorumcivic/id6764619093",
+        "https://play.google.com/store/apps/details?id=com.tkg.quorumcivic"
+      ],
       "image": "https://quorumcivic.app/images/og-cover.png",
       "publisher": { "@id": "https://quorumcivic.app/#organization" },
       "offers": {
@@ -103,7 +106,7 @@
     <p class="tagline">QuorumCivic is a nonpartisan lookup app for the public record, focused on the current Congress, the 119th (2025&ndash;2027). Search legislation, read plain-English bill analysis, follow roll-call votes, and ask questions about Congress in your own words.</p>
     <div class="cta-row">
       <a href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-hero" class="btn" data-attr="cta-download-ios">Download on iOS</a>
-      <span class="btn btn-disabled" aria-disabled="true" data-attr="cta-android-waitlist">Android coming soon</span>
+      <a href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dwebsite%26utm_medium%3Dhero" class="btn" data-attr="cta-download-android">Download on Android</a>
       <a href="support.html" class="btn btn-outline" data-attr="cta-contact">Get in touch</a>
     </div>
   </div>
@@ -203,20 +206,6 @@
     </div>
   </div>
 </footer>
-
-<script>
-    // The "Android coming soon" button is a non-interactive <span>, so PostHog
-    // autocapture does not record clicks on it. Capture the intent explicitly
-    // as an Android demand signal.
-    (function () {
-        var androidBtn = document.querySelector('[data-attr="cta-android-waitlist"]');
-        if (androidBtn && window.posthog) {
-            androidBtn.addEventListener('click', function () {
-                posthog.capture('android_waitlist_clicked', { location: 'hero' });
-            });
-        }
-    })();
-</script>
 
 </body>
 </html>

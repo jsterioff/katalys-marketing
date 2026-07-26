@@ -161,15 +161,6 @@ nav a:hover { color: var(--ember); text-decoration: none; }
   color: var(--electric-blue);
   border-color: var(--electric-blue);
 }
-/* Coming-soon placeholder: looks like a button, but greyed out and inert. */
-.btn-disabled,
-.btn-disabled:hover {
-  background: var(--bg-elevated);
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  cursor: default;
-}
-
 /* App screenshots: horizontal scroll-snap strip of CSS phone frames.
  * No JS, swipeable on mobile. Bezel stays dark in both themes (phones read
  * right that way), so it only references the always-dark token values. */
