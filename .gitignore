@@ -7,3 +7,8 @@
 # Secrets — never commit
 .env
 .env.*
+
+# Raw source captures. These get processed into images/screenshot-*.jpg before
+# use, and Pages serves the whole repo, so committing them would publish the
+# originals at quorumcivic.app.
+images/new imgs/
