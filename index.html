@@ -14,9 +14,16 @@
 <meta name="apple-itunes-app" content="app-id=6764619093">
 <link rel="canonical" href="https://quorumcivic.app/">
 <script>
-  // Platform-led store buttons: an Android visitor never sees an iOS-first
-  // page. Classed on <html> before first paint so nothing reflows or flashes.
-  if (/Android/i.test(navigator.userAgent)) document.documentElement.classList.add('android');
+  // Platform-led store buttons: a phone visitor never sees the other store's
+  // path. Desktop carries neither class and shows both links, since which
+  // phone the visitor holds is unknowable from a laptop. Classed on <html>
+  // before first paint so nothing reflows or flashes.
+  (function () {
+    var ua = navigator.userAgent;
+    var root = document.documentElement;
+    if (/Android/i.test(ua)) root.classList.add('android');
+    else if (/iPhone|iPad|iPod/i.test(ua)) root.classList.add('ios');
+  })();
 </script>
 
 <meta property="og:site_name" content="QuorumCivic">
@@ -107,8 +114,8 @@
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
       </nav>
-      <a class="btn store-pill ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-header-direct" data-store="app_store" data-placement="header" data-attr="cta-header-ios">Get the app</a>
-      <a class="btn store-pill android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-header-direct" data-store="google_play" data-placement="header" data-attr="cta-header-android">Get the app</a>
+      <a class="btn store-pill ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-header-direct" data-store="app_store" data-placement="header" data-attr="cta-header-ios">App Store</a>
+      <a class="btn store-pill android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-header-direct" data-store="google_play" data-placement="header" data-attr="cta-header-android">Google Play</a>
     </div>
   </div>
 </header>
@@ -139,8 +146,8 @@
       <div id="zip-out" aria-live="polite"></div>
       <div class="zip-cta" id="zip-cta" hidden>
         <div class="zip-cta-line" id="zip-cta-line">Every vote your members cast, plus their funders and trades, free in the app.</div>
-        <a class="btn ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-zip-direct" data-store="app_store" data-placement="zip" data-attr="cta-zip-ios">Get the app</a>
-        <a class="btn android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-zip-direct" data-store="google_play" data-placement="zip" data-attr="cta-zip-android">Get the app</a>
+        <a class="btn ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-zip-direct" data-store="app_store" data-placement="zip" data-attr="cta-zip-ios">App Store</a>
+        <a class="btn android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-zip-direct" data-store="google_play" data-placement="zip" data-attr="cta-zip-android">Google Play</a>
       </div>
       <p class="zip-note">Looked up on this device. Your ZIP is never stored on our servers; this browser remembers it so you don't retype it.</p>
     </div>
@@ -276,8 +283,8 @@
 <div class="sticky-bar" id="sticky-bar" aria-hidden="true">
   <div class="sticky-inner">
     <div class="sticky-line">Every bill, vote, and dollar of this Congress, in your pocket. Free and nonpartisan.</div>
-    <a class="btn ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-sticky-direct" data-store="app_store" data-placement="sticky" data-attr="cta-sticky-ios">Get the app</a>
-    <a class="btn android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-sticky-direct" data-store="google_play" data-placement="sticky" data-attr="cta-sticky-android">Get the app</a>
+    <a class="btn ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-sticky-direct" data-store="app_store" data-placement="sticky" data-attr="cta-sticky-ios">App Store</a>
+    <a class="btn android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-sticky-direct" data-store="google_play" data-placement="sticky" data-attr="cta-sticky-android">Google Play</a>
   </div>
 </div>
 
