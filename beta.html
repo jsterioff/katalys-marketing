@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beta program | QuorumCivic</title>
+
+<!-- Front door for the beta signup page. The page itself lives on the app
+     server (share.quorumcivic.app/beta) because its form posts to the backend
+     and the Android list has to be a real database table; recruitment posts
+     print quorumcivic.app/beta, so this file's only job is an intact handoff.
+
+     This site is GitHub Pages, a static host: it cannot answer with a 302 and
+     a Location header, so the hop runs in JS instead. Two properties matter
+     and any edit here has to keep both:
+
+       1. location.search is carried across verbatim. Recruitment links carry a
+          source tag (?s=ig, ?s=th, ?s=fb, ?s=li) that the signup page maps to
+          utm_source. Dropping the query string silently destroys the ability
+          to tell which platform recruited a tester.
+       2. location.replace, not location.href, so this shim never lands in
+          session history. Back returns the visitor to the post they came from
+          instead of bouncing them forward through the redirect again.
+
+     Deliberately no PostHog snippet: the redirect fires during parse, well
+     before an async analytics script could load, so a pageview here would be
+     unreliable and would only delay the hop. The signup page captures the
+     pageview and the mapped source on arrival. -->
+<script>
+  (function () {
+    window.location.replace(
+      'https://share.quorumcivic.app/beta' + window.location.search + window.location.hash
+    );
+  })();
+</script>
+<!-- No-JS fallback. Cannot carry the query string, so the source tag is lost
+     on this path; arriving at the form matters more than attributing it. -->
+<meta http-equiv="refresh" content="0;url=https://share.quorumcivic.app/beta">
+
+<meta name="description" content="Join the QuorumCivic beta: new builds before the stores, first look at features in development, and a direct line to the builder.">
+<meta name="author" content="The Katalys Group LLC">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0B1B2D">
+<link rel="canonical" href="https://share.quorumcivic.app/beta">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="images/favicon-512.png">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" class="brand" style="color: inherit;">
+      <span class="brand-name">QuorumCivic<span class="spark">.</span></span>
+      <span class="brand-sub">Hidden in plain sight</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container content">
+
+  <h1 class="page-title">Beta program</h1>
+  <p class="page-meta">Taking you to the signup page&hellip;</p>
+
+  <div class="callout">
+    <p>Beta signups are handled on our app server. If this page hasn't moved on its own, open it directly:</p>
+    <p><a class="btn" href="https://share.quorumcivic.app/beta">Join the beta</a></p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div>&copy; 2026 The Katalys Group LLC</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="account-deletion.html">Account deletion</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
