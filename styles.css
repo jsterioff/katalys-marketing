@@ -161,14 +161,14 @@ nav a:hover { color: var(--ember); text-decoration: none; }
   color: var(--electric-blue);
   border-color: var(--electric-blue);
 }
-/* Platform-led store paths. index.html classes <html> as .android before
- * first paint; single-slot placements (header pill, ZIP CTA, sticky bar)
- * render both stores' links and show the visitor's, and dual rows reorder
- * so the visitor's store comes first. Links stay in the DOM either way so
- * analytics.js decorates every one of them. */
-.android-only { display: none; }
-html.android .android-only { display: inline-block; }
+/* Platform-led store paths. index.html classes <html> as .android or .ios
+ * before first paint; single-slot placements (header pill, ZIP CTA, sticky
+ * bar) render both stores' links and show the visitor's, and dual rows
+ * reorder so the visitor's store comes first. Desktop carries neither class
+ * and shows both, so an Android visitor on a laptop still has a Play path.
+ * Links stay in the DOM either way so analytics.js decorates every one. */
 html.android .ios-only { display: none; }
+html.ios .android-only { display: none; }
 
 .cta-row a[data-store="app_store"] { order: 1; }
 .cta-row a[data-store="google_play"] { order: 2; }
@@ -516,6 +516,6 @@ footer a:hover { color: var(--ember); }
   nav a { margin-left: 12px; font-size: 13px; }
   header .container { gap: 12px; }
   /* No room for the pill next to brand + nav; the sticky bar covers phones. */
-  .store-pill, html.android .store-pill.android-only { display: none; }
+  .store-pill { display: none; }
   .header-right { gap: 0; }
 }
