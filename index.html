@@ -9,7 +9,15 @@
 <meta name="author" content="The Katalys Group LLC">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0B1B2D">
+<!-- Native Safari store strip. In-app browsers (TikTok/IG/YT) ignore it,
+     which is why the header pill and sticky bar below exist too. -->
+<meta name="apple-itunes-app" content="app-id=6764619093">
 <link rel="canonical" href="https://quorumcivic.app/">
+<script>
+  // Platform-led store buttons: an Android visitor never sees an iOS-first
+  // page. Classed on <html> before first paint so nothing reflows or flashes.
+  if (/Android/i.test(navigator.userAgent)) document.documentElement.classList.add('android');
+</script>
 
 <meta property="og:site_name" content="QuorumCivic">
 <meta property="og:title" content="QuorumCivic | Understand what Congress is doing">
@@ -40,6 +48,7 @@
     })
 </script>
 <script src="analytics.js" defer></script>
+<script src="home.js" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -92,11 +101,15 @@
       <span class="brand-name">QuorumCivic<span class="spark">.</span></span>
       <span class="brand-sub">Hidden in plain sight</span>
     </div>
-    <nav>
-      <a href="support.html">Support</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-    </nav>
+    <div class="header-right">
+      <nav>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+      <a class="btn store-pill ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-header-direct" data-store="app_store" data-placement="header" data-attr="cta-header-ios">Get the app</a>
+      <a class="btn store-pill android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-header-direct" data-store="google_play" data-placement="header" data-attr="cta-header-android">Get the app</a>
+    </div>
   </div>
 </header>
 
@@ -111,6 +124,27 @@
       <a href="support.html" class="btn btn-outline" data-attr="cta-contact">Get in touch</a>
     </div>
   </div>
+
+  <!-- The one interactive element on the page. The lookup is a stateless call
+       to the share-domain API; the ZIP is never stored or logged server-side,
+       and no analytics event carries it. -->
+  <section class="zip-section">
+    <h2>Start with your own three</h2>
+    <p class="zip-intro">One representative and two senators vote in your name. Enter your ZIP to see who they are, straight from the congressional record.</p>
+    <div class="zip-block" id="zip-block">
+      <form class="zip-form" id="zip-form" autocomplete="postal-code">
+        <input id="zip-input" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="ZIP code" aria-label="ZIP code" required>
+        <button class="btn" type="submit">Look up</button>
+      </form>
+      <div id="zip-out" aria-live="polite"></div>
+      <div class="zip-cta" id="zip-cta" hidden>
+        <div class="zip-cta-line" id="zip-cta-line">Every vote your members cast, plus their funders and trades, free in the app.</div>
+        <a class="btn ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-zip-direct" data-store="app_store" data-placement="zip" data-attr="cta-zip-ios">Get the app</a>
+        <a class="btn android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-zip-direct" data-store="google_play" data-placement="zip" data-attr="cta-zip-android">Get the app</a>
+      </div>
+      <p class="zip-note">Looked up on this device. Your ZIP is never stored on our servers; this browser remembers it so you don't retype it.</p>
+    </div>
+  </section>
 
   <section class="shots-section">
     <h2>A look inside</h2>
@@ -213,6 +247,15 @@
     <p>Questions, feedback, or press inquiries: <a href="mailto:hello@quorumcivic.app">hello@quorumcivic.app</a>.</p>
   </section>
 
+  <section class="closing-cta">
+    <h2>See it for yourself</h2>
+    <p>QuorumCivic is free on iOS and Android. Look up a bill, a vote, a member, or the money behind them; every fact carries its source.</p>
+    <div class="cta-row">
+      <a href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-footer-direct" class="btn" data-attr="cta-footer-ios" data-store="app_store" data-placement="footer">Download on iOS</a>
+      <a href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-footer-direct" class="btn" data-attr="cta-footer-android" data-store="google_play" data-placement="footer">Download on Android</a>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -226,6 +269,17 @@
     </div>
   </div>
 </footer>
+
+<!-- Mobile store bar. home.js shows it past ~30% scroll and hides it whenever
+     any other store button is on screen, so CTAs never stack. On screens wide
+     enough for the header pill it never appears at all. -->
+<div class="sticky-bar" id="sticky-bar" aria-hidden="true">
+  <div class="sticky-inner">
+    <div class="sticky-line">Every bill, vote, and dollar of this Congress, in your pocket. Free and nonpartisan.</div>
+    <a class="btn ios-only" href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-sticky-direct" data-store="app_store" data-placement="sticky" data-attr="cta-sticky-ios">Get the app</a>
+    <a class="btn android-only" href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-sticky-direct" data-store="google_play" data-placement="sticky" data-attr="cta-sticky-android">Get the app</a>
+  </div>
+</div>
 
 </body>
 </html>

@@ -161,6 +161,120 @@ nav a:hover { color: var(--ember); text-decoration: none; }
   color: var(--electric-blue);
   border-color: var(--electric-blue);
 }
+/* Platform-led store paths. index.html classes <html> as .android before
+ * first paint; single-slot placements (header pill, ZIP CTA, sticky bar)
+ * render both stores' links and show the visitor's, and dual rows reorder
+ * so the visitor's store comes first. Links stay in the DOM either way so
+ * analytics.js decorates every one of them. */
+.android-only { display: none; }
+html.android .android-only { display: inline-block; }
+html.android .ios-only { display: none; }
+
+.cta-row a[data-store="app_store"] { order: 1; }
+.cta-row a[data-store="google_play"] { order: 2; }
+.cta-row .btn-outline { order: 3; }
+html.android .cta-row a[data-store="google_play"] { order: 1; }
+html.android .cta-row a[data-store="app_store"] { order: 2; }
+
+/* Header store pill. The header is sticky, so the pill is the store path
+ * that is always within reach; the sticky bar below only serves screens too
+ * narrow to fit it. */
+.header-right { display: flex; align-items: center; gap: 20px; }
+.header-right nav a:first-child { margin-left: 0; }
+.store-pill { padding: 8px 14px; font-size: 14px; white-space: nowrap; }
+
+/* ZIP delegation block. Panel-styled so it reads as a tool set into the
+ * page, not an ad break. Party dots keep the party word in the adjacent
+ * text, never color alone; representative rows stay neutral because the
+ * general lookup returns party for senators only. */
+.zip-section .zip-intro {
+  font-size: 17px;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  max-width: 560px;
+}
+.zip-block {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 20px 18px;
+}
+.zip-form { display: flex; gap: 10px; }
+.zip-form input {
+  flex: 1;
+  min-width: 0;
+  max-width: 160px;
+  font-size: 16px;
+  padding: 10px 13px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+.zip-form input:focus {
+  outline: 2px solid var(--ember);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.zip-form .btn { padding: 10px 18px; font-size: 14.5px; cursor: pointer; }
+.zip-err { font-size: 14px; color: var(--ember); margin: 12px 0 0; }
+.zip-note { font-size: 13px; color: var(--text-muted); margin: 14px 0 0; }
+.zip-rows { margin: 14px 0 0; }
+.zip-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--border);
+}
+.zip-row:first-child { border-top: none; }
+.pdot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; background: var(--text-muted); }
+.pdot.R { background: #d0453a; }
+.pdot.D { background: #3b74d9; }
+.pdot.I { background: #8b5cf6; }
+.zip-who { flex: 1; font-size: 15px; line-height: 1.4; color: var(--text-primary); }
+.zip-who .seat { color: var(--text-muted); font-size: 13.5px; }
+.zip-ctx { font-size: 12.5px; color: var(--text-muted); margin: 10px 0 0; line-height: 1.5; }
+.zip-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.zip-cta[hidden] { display: none; }   /* display:flex would defeat the hidden attr */
+.zip-cta-line { flex: 1; font-size: 14px; line-height: 1.4; color: var(--text-primary); }
+.zip-cta .btn { flex-shrink: 0; padding: 10px 16px; font-size: 14px; }
+
+/* Sticky store bar (narrow screens). home.js toggles .show; it stays hidden
+ * whenever any other store button, the header pill included, is on screen. */
+.sticky-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  transform: translateY(110%);
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0.25s;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+}
+.sticky-bar.show { transform: translateY(0); visibility: visible; }
+.sticky-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sticky-line { flex: 1; font-size: 13.5px; line-height: 1.35; color: var(--text-primary); }
+.sticky-bar .btn { flex-shrink: 0; padding: 10px 16px; font-size: 14px; }
+body.has-sticky footer { padding-bottom: 120px; }
+
 /* App screenshots: horizontal scroll-snap strip of CSS phone frames.
  * No JS, swipeable on mobile. Bezel stays dark in both themes (phones read
  * right that way), so it only references the always-dark token values. */
@@ -401,4 +515,7 @@ footer a:hover { color: var(--ember); }
   .brand-sub { font-size: 11px; }
   nav a { margin-left: 12px; font-size: 13px; }
   header .container { gap: 12px; }
+  /* No room for the pill next to brand + nav; the sticky bar covers phones. */
+  .store-pill, html.android .store-pill.android-only { display: none; }
+  .header-right { gap: 0; }
 }
