@@ -1,17 +1,30 @@
 /*
-  QuorumCivic store-link attribution.
+  QuorumCivic apex analytics: pageview source labeling plus store-link
+  attribution. Two jobs, one channel vocabulary.
 
-  Carries the landing page's campaign parameters through to the App Store and
-  Google Play links, and mirrors the same values onto a PostHog event so all
-  three reports share one join key.
+  1. Pageview source labeling. Profile links in social bios use short typable
+     tags (quorumcivic.app/?s=yt) because a bio line has no room for
+     utm_source. This script maps the tag onto utm_source/utm_medium and
+     registers them BEFORE capturing the pageview, so channel breakdowns work
+     natively in PostHog. The pages therefore init PostHog with the automatic
+     pageview off (it fires during init(), before any register() queued behind
+     it would apply) and this script captures $pageview by hand instead.
 
-  Join key is campaign_token, for example "web-hero-reddit":
-    Apple        ct=<token>           App Store Connect > App Analytics > Campaigns
-    Google Play  utm_content=<token>  inside the install referrer string
-    PostHog      campaign_token       property on the store_link_click event
+  2. Store-link attribution. Carries the landing page's campaign signal
+     through to the App Store and Google Play links, and mirrors the same
+     values onto a PostHog event so all three reports share one join key.
 
-  Links carry a working ...-direct token in their markup, so the tokens stay
-  valid if this script never runs. The script only upgrades them in place.
+     Join key is campaign_token, for example "web-hero-reddit":
+       Apple        ct=<token>           App Store Connect > App Analytics > Campaigns
+       Google Play  utm_content=<token>  inside the install referrer string
+       PostHog      campaign_token       property on the store_link_click event
+
+     Links carry a working ...-direct token in their markup, so the tokens
+     stay valid if this script never runs. It only upgrades them in place.
+
+  Precedence, same for both jobs and same as the share host: an explicit
+  utm_source on the URL, then our ?s= tag (utm_medium social), then an
+  ad-platform click id (utm_medium referral), then the referrer host.
 */
 (function () {
   'use strict';
@@ -25,15 +38,36 @@
 
   var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
 
-  // Ad-platform click ids, used to name the channel when no utm_source is set.
-  var CLICK_IDS = {
-    gclid: 'google-ads',
-    gbraid: 'google-ads',
-    wbraid: 'google-ads',
-    fbclid: 'meta',
-    ttclid: 'tiktok',
-    msclkid: 'bing-ads',
-    twclid: 'x'
+  // The ?s= tag vocabulary. Must stay identical to the share host's copy in
+  // the quorum repo (web/templates/receipt.html); it has drifted across files
+  // twice already (li, then fbp), and a drifted tag registers nothing.
+  var SRC = { ig: 'instagram', th: 'threads', bs: 'bluesky',
+              yt: 'youtube', tt: 'tiktok', fb: 'facebook',
+              li: 'linkedin', fbp: 'facebook_page', rd: 'reddit' };
+
+  // Ad-platform click ids, used to name the channel when no utm_source or ?s=
+  // tag is present. Values normalise onto the SRC vocabulary above, same as
+  // the share host, so one channel is one bucket across hosts. Caveat: every
+  // Meta app appends fbclid, and the new-format token encodes which one, so
+  // read "facebook via click id" as "some Meta app", not Facebook proper.
+  var CLICK_IDS = { fbclid: 'facebook', gclid: 'google', gbraid: 'google',
+                    wbraid: 'google', msclkid: 'bing', ttclid: 'tiktok',
+                    twclid: 'x', li_fat_id: 'linkedin' };
+
+  // Referrer hosts, normalised onto the same vocabulary. Unlisted hosts pass
+  // through as their bare hostname.
+  var REF_HOSTS = {
+    'facebook.com': 'facebook', 'm.facebook.com': 'facebook',
+    'l.facebook.com': 'facebook', 'lm.facebook.com': 'facebook',
+    'linkedin.com': 'linkedin', 'lnkd.in': 'linkedin',
+    'com.linkedin.android': 'linkedin',
+    'google.com': 'google', 'bing.com': 'bing', 'duckduckgo.com': 'duckduckgo',
+    'instagram.com': 'instagram', 'l.instagram.com': 'instagram',
+    't.co': 'x', 'x.com': 'x', 'threads.com': 'threads',
+    'l.threads.com': 'threads', 'bsky.app': 'bluesky',
+    'go.bsky.app': 'bluesky', 'youtube.com': 'youtube',
+    'm.youtube.com': 'youtube', 'reddit.com': 'reddit',
+    'out.reddit.com': 'reddit', 'tiktok.com': 'tiktok'
   };
 
   function slug(value) {
@@ -63,10 +97,21 @@
       }
     });
 
+    // Our own short source tag, second only to an explicit utm_source.
+    var tagged = SRC[params.get('s')];
+    if (tagged) {
+      if (!attribution.utm_source) attribution.utm_source = tagged;
+      if (!attribution.utm_medium) attribution.utm_medium = 'social';
+      found = true;
+    }
+
     for (var id in CLICK_IDS) {
       if (Object.prototype.hasOwnProperty.call(CLICK_IDS, id) && params.get(id)) {
         attribution.click_id_type = id;
-        if (!attribution.utm_source) attribution.utm_source = CLICK_IDS[id];
+        if (!attribution.utm_source) {
+          attribution.utm_source = CLICK_IDS[id];
+          if (!attribution.utm_medium) attribution.utm_medium = 'referral';
+        }
         found = true;
         break;
       }
@@ -78,13 +123,13 @@
     // our own pages is not a new touch and is ignored here.
     var host = '';
     try {
-      host = new URL(document.referrer).hostname.replace(/^www\./, '');
+      host = new URL(document.referrer).hostname.replace(/^www\./, '').toLowerCase();
     } catch (e) {
       return null;
     }
     if (!host || host === window.location.hostname) return null;
 
-    return { utm_source: host, utm_medium: 'referral', referrer_host: host };
+    return { utm_source: REF_HOSTS[host] || host, utm_medium: 'referral', referrer_host: host };
   }
 
   function load() {
@@ -187,6 +232,70 @@
     );
   }
 
+  // Label the pageview before it is captured, then capture it. The pages init
+  // PostHog with the automatic pageview off because it fires during init(),
+  // before the register() below would apply; captured here instead, the event
+  // carries the mapped source. An explicit utm_source on the URL always wins:
+  // posthog-js reads it natively at capture time, so anything registered here
+  // would only overwrite the truth. On localhost init() is skipped and
+  // window.posthog stays a queueing stub, so all of this safely no-ops.
+  function capturePageview() {
+    var ph = window.posthog;
+    if (!ph || typeof ph.register !== 'function' || typeof ph.capture !== 'function') return;
+
+    var params;
+    try {
+      params = new URLSearchParams(window.location.search);
+    } catch (e) {
+      params = null;
+    }
+
+    if (params && !params.get('utm_source')) {
+      var src = null;
+      var medium = null;
+      var extra = {};
+
+      var tagged = SRC[params.get('s')];
+      if (tagged) {
+        // A tag we placed. Highest confidence, and utm_medium 'social' is
+        // what separates "we posted this" from "we inferred it".
+        src = tagged;
+        medium = 'social';
+      } else {
+        for (var id in CLICK_IDS) {
+          if (Object.prototype.hasOwnProperty.call(CLICK_IDS, id) && params.get(id)) {
+            src = CLICK_IDS[id];
+            medium = 'referral';
+            extra.click_id_type = id;
+            break;
+          }
+        }
+        if (!src) {
+          var host = '';
+          try {
+            host = new URL(document.referrer).hostname.replace(/^www\./, '').toLowerCase();
+          } catch (e) {
+            host = '';
+          }
+          // Same-host navigation is not a new touch.
+          if (host && host !== window.location.hostname) {
+            src = REF_HOSTS[host] || host;
+            medium = 'referral';
+            extra.referrer_host = host;
+          }
+        }
+      }
+
+      if (src) {
+        extra.utm_source = src;
+        extra.utm_medium = medium;
+        ph.register(extra);
+      }
+    }
+
+    ph.capture('$pageview');
+  }
+
   function init() {
     var attribution = resolve();
     var links = document.querySelectorAll('a[data-store]');
@@ -199,6 +308,8 @@
       });
     });
   }
+
+  capturePageview();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
