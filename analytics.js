@@ -4,11 +4,12 @@
 
   1. Pageview source labeling. Profile links in social bios use short typable
      tags (quorumcivic.app/?s=yt) because a bio line has no room for
-     utm_source. This script maps the tag onto utm_source/utm_medium and
-     registers them BEFORE capturing the pageview, so channel breakdowns work
-     natively in PostHog. The pages therefore init PostHog with the automatic
-     pageview off (it fires during init(), before any register() queued behind
-     it would apply) and this script captures $pageview by hand instead.
+     utm_source. This script maps the tag onto utm_source/utm_medium, writes
+     them into the page's own URL, and THEN captures $pageview by hand, so
+     posthog-js picks the label up through its native campaign-param path.
+     The pages init PostHog with the automatic pageview off (it fires during
+     init(), before this script runs). Why the URL and not register(): see the
+     comment above capturePageview().
 
   2. Store-link attribution. Carries the landing page's campaign signal
      through to the App Store and Google Play links, and mirrors the same
@@ -232,12 +233,21 @@
     );
   }
 
-  // Label the pageview before it is captured, then capture it. The pages init
-  // PostHog with the automatic pageview off because it fires during init(),
-  // before the register() below would apply; captured here instead, the event
-  // carries the mapped source. An explicit utm_source on the URL always wins:
-  // posthog-js reads it natively at capture time, so anything registered here
-  // would only overwrite the truth. On localhost init() is skipped and
+  // Label the pageview, then capture it. Anything that ends up as utm_source
+  // is written INTO the page's own URL (replaceState) before the capture —
+  // never register()ed. At the first capture posthog-js builds every key on
+  // its campaign list as "value or null" whenever ANY campaign parameter is
+  // present, and registers that object into session persistence, which
+  // outranks register() at merge time. fbclid is on that list and every Meta
+  // app appends one, so tagged Threads / Instagram / Facebook taps on
+  // /?s=ig&fbclid=... landed as utm_source=None while YouTube (no click id)
+  // kept its label. Same fix the share host shipped in receipt.html and
+  // beta.html on 2026-08-21 (reproduced and verified against posthog-js
+  // 1.418.10 in a local harness there); mechanism and history in the quorum
+  // repo's docs/handoff/apex_source_tags_2026-08-20.md addendum. Properties
+  // NOT on the campaign list (click_id_type, referrer_host) still register()
+  // safely. An explicit utm_source on the URL always wins — this only ever
+  // appends when one is absent. On localhost init() is skipped and
   // window.posthog stays a queueing stub, so all of this safely no-ops.
   function capturePageview() {
     var ph = window.posthog;
@@ -287,9 +297,15 @@
       }
 
       if (src) {
-        extra.utm_source = src;
-        extra.utm_medium = medium;
-        ph.register(extra);
+        var qs = window.location.search
+               + (window.location.search ? '&' : '?')
+               + 'utm_source=' + encodeURIComponent(src)
+               + '&utm_medium=' + encodeURIComponent(medium);
+        try {
+          window.history.replaceState(window.history.state, '',
+            window.location.pathname + qs + window.location.hash);
+        } catch (e) { /* the page still works; only the label is lost */ }
+        if (extra.click_id_type || extra.referrer_host) ph.register(extra);
       }
     }
 
