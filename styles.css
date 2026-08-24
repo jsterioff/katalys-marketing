@@ -133,6 +133,41 @@ nav a:hover { color: var(--ember); text-decoration: none; }
   align-items: center;
 }
 
+/* Finding hero — the feed's #1 story, filled by home.js. Serif keys it as an
+ * editorial finding (the app's hero-statement convention) against the sans
+ * pitch. When it renders, .hero-pitch demotes to a supporting block below. */
+.hero-finding { margin: 0 0 56px; }
+.hero-finding .finding-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin: 0 0 14px;
+}
+.hero-finding .finding-headline {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 18px;
+}
+.hero-finding .finding-dek {
+  font-size: 19px;
+  color: var(--text-secondary);
+  margin: 0 0 26px;
+  max-width: 600px;
+}
+.hero-finding .finding-source {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 18px 0 0;
+}
+.hero-pitch.demoted h1 { font-size: 26px; margin-bottom: 14px; }
+.hero-pitch.demoted .tagline { font-size: 16px; margin-bottom: 22px; }
+
 /* Buttons */
 .btn {
   display: inline-block;
@@ -510,6 +545,9 @@ footer a:hover { color: var(--ember); }
 @media (max-width: 600px) {
   .hero h1 { font-size: 32px; }
   .hero .tagline { font-size: 17px; }
+  .hero-finding .finding-headline { font-size: 29px; }
+  .hero-finding .finding-dek { font-size: 17px; }
+  .hero-pitch.demoted h1 { font-size: 22px; }
   .page-title { font-size: 28px; }
   .brand-name { font-size: 15px; white-space: nowrap; }
   .brand-sub { font-size: 11px; }

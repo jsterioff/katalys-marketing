@@ -32,6 +32,56 @@
     });
   }
 
+  // ── Finding hero: the feed's #1 story ─────────────────────────────────────
+  // Opens the page with a specific finding instead of the product pitch
+  // (docs/strategy/pivot_2026-08.md §3 in the quorum repo; the 2026-08-18
+  // traffic analysis measured receipts holding 50% of readers vs 2.8% here).
+  // The API returns the same fields the /s/ receipt page renders, so the hero
+  // and its destination cannot disagree. Every failure path leaves the static
+  // pitch as the hero. The receipt link carries explicit utm_ params — the
+  // receipt page's attribution gives URL utm_source absolute precedence, so
+  // hero-driven deep-reads land in their own bucket with no ?s= vocabulary
+  // change on either host.
+  (function () {
+    var block = document.getElementById('hero-finding');
+    if (!block) return;
+
+    fetch('https://share.quorumcivic.app/api/feed/top-story')
+      .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
+      .then(function (data) {
+        var s = data && data.story;
+        if (!s || !s.headline || !s.receipt_url) return;
+
+        document.getElementById('finding-headline').textContent = s.headline;
+
+        var dek = document.getElementById('finding-dek');
+        if (s.dek) { dek.textContent = s.dek; } else { dek.hidden = true; }
+
+        if (s.eyebrow) {
+          document.getElementById('finding-eyebrow').textContent =
+            'This week\'s finding · ' + s.eyebrow;
+        }
+
+        document.getElementById('finding-source').textContent =
+          (s.subhead ? s.subhead + ' · ' : '')
+          + 'From the public record of the 119th Congress';
+
+        var link = document.getElementById('finding-link');
+        link.href = s.receipt_url
+          + (s.receipt_url.indexOf('?') === -1 ? '?' : '&')
+          + 'utm_source=quorumcivic.app&utm_medium=apex_hero';
+        link.addEventListener('click', function () {
+          capture('web_hero_finding_click', { story_uid: s.story_uid });
+        });
+
+        block.hidden = false;
+        var pitch = document.getElementById('hero-pitch');
+        if (pitch) pitch.classList.add('demoted');
+        capture('web_hero_finding_shown', { story_uid: s.story_uid });
+      })
+      .catch(function () { /* static pitch stays the hero */ });
+  })();
+
   // ── ZIP block: who represents you ─────────────────────────────────────────
   (function () {
     var block = document.getElementById('zip-block');

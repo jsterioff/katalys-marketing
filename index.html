@@ -137,12 +137,29 @@
 <main class="container">
 
   <div class="hero">
-    <h1>Understand what Congress is doing, and what it means.</h1>
-    <p class="tagline">QuorumCivic is a nonpartisan lookup app for the public record, focused on the current Congress, the 119th (2025&ndash;2027). Search legislation, read plain-English bill analysis, follow roll-call votes, and ask questions about Congress in your own words.</p>
-    <div class="cta-row">
-      <a href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-hero-direct" class="btn" data-attr="cta-download-ios" data-store="app_store" data-placement="hero">Download on iOS</a>
-      <a href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-hero-direct" class="btn" data-attr="cta-download-android" data-store="google_play" data-placement="hero">Download on Android</a>
-      <a href="support.html" class="btn btn-outline" data-attr="cta-contact">Get in touch</a>
+    <!-- The finding hero. home.js fills this from the share-domain top-story
+         API (the feed bundle's #1 story) and unhides it; the pitch below then
+         demotes to a supporting block. If the fetch never resolves, the pitch
+         simply stays the hero — the pre-2026-08 page, unchanged. Why: measured
+         2026-08-18, receipt pages held 50% of readers past 75% depth while
+         this page's pitch held 2.8%. Open with a finding, not marketing. -->
+    <div class="hero-finding" id="hero-finding" hidden>
+      <div class="finding-eyebrow" id="finding-eyebrow">This week's finding</div>
+      <p class="finding-headline" id="finding-headline"></p>
+      <p class="finding-dek" id="finding-dek"></p>
+      <div class="cta-row">
+        <a class="btn" id="finding-link" href="https://share.quorumcivic.app/" data-attr="cta-hero-finding">Read the full receipt</a>
+      </div>
+      <p class="finding-source" id="finding-source"></p>
+    </div>
+    <div class="hero-pitch" id="hero-pitch">
+      <h1>Understand what Congress is doing, and what it means.</h1>
+      <p class="tagline">QuorumCivic is a nonpartisan lookup app for the public record, focused on the current Congress, the 119th (2025&ndash;2027). Search legislation, read plain-English bill analysis, follow roll-call votes, and ask questions about Congress in your own words.</p>
+      <div class="cta-row">
+        <a href="https://apps.apple.com/app/quorumcivic/id6764619093?ct=web-hero-direct" class="btn" data-attr="cta-download-ios" data-store="app_store" data-placement="hero">Download on iOS</a>
+        <a href="https://play.google.com/store/apps/details?id=com.tkg.quorumcivic&amp;referrer=utm_source%3Dquorumcivic.app%26utm_medium%3Dwebsite%26utm_campaign%3Ddirect%26utm_content%3Dweb-hero-direct" class="btn" data-attr="cta-download-android" data-store="google_play" data-placement="hero">Download on Android</a>
+        <a href="support.html" class="btn btn-outline" data-attr="cta-contact">Get in touch</a>
+      </div>
     </div>
   </div>
 
