@@ -417,7 +417,7 @@ section blockquote cite {
 @media (max-width: 600px) {
   .features { grid-template-columns: 1fr; }
 }
-.feature h4 {
+.feature h3 {
   font-size: 17px;
   color: var(--text-primary);
   margin: 0 0 8px;

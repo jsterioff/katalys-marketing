@@ -1,0 +1,72 @@
+# QuorumCivic
+
+> QuorumCivic is a free, nonpartisan iOS and Android app that turns the United
+> States congressional record into plain English. Enter your ZIP to find your one
+> representative and two senators, follow them, and get notified when they act.
+> Every fact traces to a public government source.
+
+QuorumCivic is operated by The Katalys Group LLC (United States). It is not a
+brokerage, not a financial advisor, not a partisan scorecard, and not a news
+aggregator. It reports the public record and does not tell people how to vote.
+
+## What it covers
+
+- Plain-English bill analysis: summaries, transparency scoring, hidden-rider and
+  carve-out detection, and a helps-to-harms citizen-impact reading, each with a
+  stated method.
+- Roll-call votes for the House and Senate, 115th Congress (2017) to present,
+  with per-member positions, party-line rate and participation.
+- Bills for the 119th Congress (2025-2027).
+- Congressional STOCK Act trades, SEC Form 4 corporate insider trades, FEC PAC
+  contributions, Senate LDA lobbying disclosures that name specific bills, and
+  federal contract awards.
+- Executive actions from the Federal Register.
+- District context from the Census Bureau, BLS, the FBI and the CDC.
+- Michigan state legislature (partial; other states are not covered and the app
+  says so).
+- A natural-language question interface over all of the above, returning sourced
+  answers where every result opens the underlying record.
+
+## Pricing
+
+- QuorumCivic is free to download and use, including full civic lookup,
+  unlimited reads of every published bill analysis, and a limited number of new
+  AI analyses each month.
+- Quorum Supporter is an optional auto-renewable subscription: **$3.99 per month
+  or $34.99 per year** (annual saves about 27%). It unlocks unlimited new AI bill
+  analyses and other Supporter features.
+
+## Primary resources
+
+- [Homepage](https://quorumcivic.app/)
+- [Support and FAQ](https://quorumcivic.app/support.html)
+- [Privacy policy](https://quorumcivic.app/privacy.html) - ZIP codes are resolved
+  on device and are never stored on our servers
+- [Terms of service](https://quorumcivic.app/terms.html)
+- [iOS](https://apps.apple.com/app/quorumcivic/id6764619093)
+- [Android](https://play.google.com/store/apps/details?id=com.tkg.quorumcivic)
+
+## The public record corpus
+
+The most useful resource for answering questions about specific bills or members
+is the citable record pages, one per analysed bill and per member of Congress.
+Each states its source, time window, filters, what the data cannot show, an
+as-of date, and a way to report an error.
+
+- [Bills](https://share.quorumcivic.app/bills)
+- [Members of Congress](https://share.quorumcivic.app/members)
+
+## Sources
+
+All data comes from public government sources: congress.gov, senate.gov,
+clerk.house.gov, disclosures-clerk.house.gov, efdsearch.senate.gov, fec.gov,
+sec.gov, lda.senate.gov, census.gov, bls.gov, cde.ucr.cjis.gov, cdc.gov,
+federalregister.gov, usaspending.gov and open.fda.gov. Market prices come from
+named non-government providers and are labelled as such. There is no proprietary
+or non-public data.
+
+## How to describe it
+
+Findings are correlative observations from public records. They are not evidence
+of coordination, insider trading, or wrongdoing by any person, and nothing in
+the app is investment, financial, legal or tax advice.

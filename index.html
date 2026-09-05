@@ -104,11 +104,43 @@
       ],
       "image": "https://quorumcivic.app/images/og-cover.png",
       "publisher": { "@id": "https://quorumcivic.app/#organization" },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "QuorumCivic",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free. Full civic lookup, unlimited reads of published bill analyses, and a limited number of new AI analyses each month."
+        },
+        {
+          "@type": "Offer",
+          "name": "Quorum Supporter (monthly)",
+          "price": "3.99",
+          "priceCurrency": "USD",
+          "description": "Unlimited new AI bill analyses and other Supporter features.",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "3.99",
+            "priceCurrency": "USD",
+            "billingDuration": 1,
+            "unitCode": "MON"
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Quorum Supporter (annual)",
+          "price": "34.99",
+          "priceCurrency": "USD",
+          "description": "Unlimited new AI bill analyses and other Supporter features. Saves about 27% against the monthly price.",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "34.99",
+            "priceCurrency": "USD",
+            "billingDuration": 1,
+            "unitCode": "ANN"
+          }
+        }
+      ]
     }
   ]
 }
@@ -210,7 +242,7 @@
       </figure>
       <figure class="phone">
         <div class="frame">
-          <img src="images/screenshot-explore-congress.jpg" alt="QuorumCivic Congress screen with search and 119th Congress totals of 18,476 bills introduced, 104 became law, 1,535 roll-call votes, and $1.9B in direct PAC contributions, plus shortcuts to the House, Senate, companies, and committees." loading="lazy" width="232">
+          <img src="images/screenshot-explore-congress.jpg" alt="QuorumCivic Congress screen with search and 119th Congress totals of 18,476 bills introduced, 104 became law and 1,535 roll-call votes, plus $1.9B in direct PAC contributions indexed across the 2020&ndash;2026 election cycles, and shortcuts to the House, Senate, companies, and committees." loading="lazy" width="232">
         </div>
         <figcaption>Every member, bill, vote, and dollar, in one place.</figcaption>
       </figure>
@@ -239,20 +271,20 @@
     <h2>What's inside</h2>
     <div class="features">
       <div class="feature">
-        <h4>Bill intelligence</h4>
+        <h3>Bill intelligence</h3>
         <p>Plain-English summaries of legislation. See which bills are transparent and which bury hidden riders, sponsorships, or industry-specific carve-outs.</p>
       </div>
       <div class="feature">
-        <h4>Roll-call votes</h4>
+        <h3>Roll-call votes</h3>
         <p>House and Senate roll calls, with each member's position and party-line behavior. See who broke ranks and on what.</p>
       </div>
       <div class="feature">
-        <h4>Ask anything</h4>
+        <h3>Ask anything</h3>
         <p>A natural-language interface over the civic data layer. Ask about a bill, a member, a committee, a vote, and get a sourced answer.</p>
       </div>
       <div class="feature">
-        <h4>Built on public records</h4>
-        <p>Every fact is traceable to its source: Congress.gov, the Federal Register, the FEC, and SEC filings. No proprietary insider data, no closed sources.</p>
+        <h3>Built on public records</h3>
+        <p>Every fact is traceable to its source: Congress.gov, Senate.gov and the House Clerk, the FEC, SEC filings, Senate lobbying disclosures, the Federal Register, USAspending, the FDA, the Census Bureau, BLS, the FBI and the CDC &mdash; 15 government sources in all. No proprietary insider data, no closed sources.</p>
       </div>
     </div>
   </section>
