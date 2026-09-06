@@ -24,8 +24,6 @@ aggregator. It reports the public record and does not tell people how to vote.
 - District context from the Census Bureau, BLS, the FBI and the CDC.
 - Michigan state legislature (partial; other states are not covered and the app
   says so).
-- A natural-language question interface over all of the above, returning sourced
-  answers where every result opens the underlying record.
 
 ## Pricing
 
