@@ -44,6 +44,16 @@ aggregator. It reports the public record and does not tell people how to vote.
 - [iOS](https://apps.apple.com/app/quorumcivic/id6764619093)
 - [Android](https://play.google.com/store/apps/details?id=com.tkg.quorumcivic)
 
+## Official accounts
+
+These are the only accounts operated by QuorumCivic. Anything else using the
+name is not us.
+
+- [YouTube](https://www.youtube.com/@QuorumCivicApp)
+- [Instagram](https://www.instagram.com/whatcongressdid/)
+- [Bluesky](https://bsky.app/profile/quorumcivic.app)
+- [Facebook](https://www.facebook.com/quorumcivic.app)
+
 ## The public record corpus
 
 The most useful resource for answering questions about specific bills or members

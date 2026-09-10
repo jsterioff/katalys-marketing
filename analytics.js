@@ -234,7 +234,7 @@
   }
 
   // Label the pageview, then capture it. Anything that ends up as utm_source
-  // is written INTO the page's own URL (replaceState) before the capture —
+  // is written INTO the page's own URL (replaceState) before the capture,
   // never register()ed. At the first capture posthog-js builds every key on
   // its campaign list as "value or null" whenever ANY campaign parameter is
   // present, and registers that object into session persistence, which
@@ -246,7 +246,7 @@
   // 1.418.10 in a local harness there); mechanism and history in the quorum
   // repo's docs/handoff/apex_source_tags_2026-08-20.md addendum. Properties
   // NOT on the campaign list (click_id_type, referrer_host) still register()
-  // safely. An explicit utm_source on the URL always wins — this only ever
+  // safely. An explicit utm_source on the URL always wins; this only ever
   // appends when one is absent. On localhost init() is skipped and
   // window.posthog stays a queueing stub, so all of this safely no-ops.
   function capturePageview() {

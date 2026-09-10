@@ -38,7 +38,7 @@
   // traffic analysis measured receipts holding 50% of readers vs 2.8% here).
   // The API returns the same fields the /s/ receipt page renders, so the hero
   // and its destination cannot disagree. Every failure path leaves the static
-  // pitch as the hero. The receipt link carries explicit utm_ params — the
+  // pitch as the hero. The receipt link carries explicit utm_ params; the
   // receipt page's attribution gives URL utm_source absolute precedence, so
   // hero-driven deep-reads land in their own bucket with no ?s= vocabulary
   // change on either host.
